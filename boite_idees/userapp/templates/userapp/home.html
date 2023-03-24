@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{%block title%}Boîte à idées {%endblock%}
+
+
+
+{%block content%}
+
+<h1>Voici la boite à idées</h1>
+
+
+<ul>
+    {% for idee in liste_idee %}
+    <li>{{ idee.author }} propose l'idée: {{ idee.formulation }}</li>
+    <form method="post" action="{% url 'vote' %}">
+        {% csrf_token %}
+        <input type="hidden" name="idee_id" value="{{ idee.id }}">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="vote" id="vote_positif" value="1">
+            <label class="form-check-label" for="vote_positif">
+                +1
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="vote" id="vote_negatif" value="-1">
+            <label class="form-check-label" for="vote_negatif">
+                -1
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Voter</button>
+    </form>
+{% endfor %}
+
+</ul>
+
+{%endblock%}
